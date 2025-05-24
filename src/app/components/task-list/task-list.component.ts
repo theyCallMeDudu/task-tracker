@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskFilter } from 'src/app/enums/task-filter.enum';
 
 @Component({
   selector: 'app-task-list',
@@ -27,6 +28,8 @@ export class TaskListComponent implements OnInit {
   ]
 
   newTaskTitle: string = "";
+  filter: TaskFilter = TaskFilter.All;
+  TaskFilter = TaskFilter;
 
   toggleTask(task: Task) {
     task.completed = !task.completed;
@@ -52,6 +55,17 @@ export class TaskListComponent implements OnInit {
   removeTask(taskToRemove: Task) {
     this.tasks = this.tasks.filter(task => task.id !== taskToRemove.id);
     this.saveTasksToLocalStorage();
+  }
+
+  get filteredTasks(): Task[] {
+    switch (this.filter) {
+      case TaskFilter.Pending:
+        return this.tasks.filter(task => !task.completed);
+      case TaskFilter.Completed:
+        return this.tasks.filter(task => task.completed);
+      default:
+        return this.tasks;
+    }
   }
 }
 
