@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Task } from 'src/app/models/task.model';
 import { TaskFilter } from 'src/app/enums/task-filter.enum';
 
 @Component({
@@ -67,10 +68,4 @@ export class TaskListComponent implements OnInit {
         return this.tasks;
     }
   }
-}
-
-export interface Task {
-  id: number,
-  title: string,
-  completed: boolean
 }

@@ -1,7 +1,13 @@
 <div>TASK LIST</div>
 
-<form (submit)="saveTask(); $event.preventDefault()">
-  <input type="text" id="taskTitle" name="taskTitle" [(ngModel)]="newTaskTitle" placeholder="New task">
+<form
+  (submit)="saveTask(); $event.preventDefault()">
+  <input
+    type="text"
+    id="taskTitle"
+    name="taskTitle"
+    [(ngModel)]="newTaskTitle"
+    placeholder="New task">
   <button type="submit">Save</button>
 </form>
 
@@ -14,14 +20,10 @@
 </div>
 
 <ul>
-  <li *ngFor="let task of filteredTasks">
-    <span [ngStyle]="{ 'text-decoration': task.completed ? 'line-through' : 'none' }">
-      Task: {{task.title}}
-    </span>
-    - {{ task.completed ? 'Done' : 'Pending' }}
-    <button (click)="toggleTask(task)">
-      {{ !task.completed ? 'Complete' : 'Reopen' }}
-    </button>
-    <button (click)="removeTask(task); $event.stopPropagation()">Remove</button>
-  </li>
+  <app-task-item
+    *ngFor="let task of filteredTasks"
+    [task]="task"
+    (toggle)="toggleTask($event)"
+    (remove)="removeTask($event)">
+  </app-task-item>
 </ul>

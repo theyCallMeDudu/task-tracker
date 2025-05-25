@@ -1,0 +1,15 @@
+<li>
+  <span
+    [ngStyle]="{ 'text-decoration': task.completed ? 'line-through' : 'none' }">
+    Task: {{task.title}}
+  </span>
+  - {{ task.completed ? 'Done' : 'Pending' }}
+  <button
+    (click)="onToggle()">
+    {{ !task.completed ? 'Complete' : 'Reopen' }}
+  </button>
+  <button
+    (click)="onRemove(); $event.stopPropagation()">
+    Remove
+  </button>
+</li>
