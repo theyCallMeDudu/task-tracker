@@ -1,15 +1,8 @@
 <div>TASK LIST</div>
 
-<form
-  (submit)="saveTask(); $event.preventDefault()">
-  <input
-    type="text"
-    id="taskTitle"
-    name="taskTitle"
-    [(ngModel)]="newTaskTitle"
-    placeholder="New task">
-  <button type="submit">Save</button>
-</form>
+<app-task-form
+  (add)="saveTask($event)">
+</app-task-form>
 
 <hr>
 

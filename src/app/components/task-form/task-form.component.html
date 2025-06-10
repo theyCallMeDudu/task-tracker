@@ -1,0 +1,11 @@
+<form
+  (submit)="onSubmit(); $event.preventDefault()">
+  <input
+    type="text"
+    id="taskTitle"
+    name="taskTitle"
+    [(ngModel)]="newTaskTitle"
+    placeholder="New task"
+    autocomplete="off">
+  <button type="submit">Save</button>
+</form>

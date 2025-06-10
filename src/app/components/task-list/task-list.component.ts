@@ -37,15 +37,14 @@ export class TaskListComponent implements OnInit {
     this.saveTasksToLocalStorage();
   }
 
-  saveTask() {
+  saveTask(title: string) {
     const newTask: Task = {
       id: this.tasks.length + 1,
-      title: this.newTaskTitle.trim(),
+      title,
       completed: false
     };
 
     this.tasks.push(newTask);
-    this.newTaskTitle = "";
     this.saveTasksToLocalStorage();
   }
 
