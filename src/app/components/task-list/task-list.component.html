@@ -1,5 +1,10 @@
 <div>TASK LIST</div>
 
+<input
+  type="text"
+  [(ngModel)]="searchTerm"
+  placeholder="Search for a task..." />
+
 <app-task-form
   (add)="saveTask($event)">
 </app-task-form>

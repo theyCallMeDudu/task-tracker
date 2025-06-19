@@ -8,19 +8,20 @@ import { TaskFilter } from 'src/app/enums/task-filter.enum';
   styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
+    public searchTerm: string = '';
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit(): void {
-    try {
-      const storedTasks = localStorage.getItem('tasks');
-      this.tasks = storedTasks ? JSON.parse(storedTasks) : [];
-    } catch (error) {
-      console.error('An error occurred when trying to read localStorage.', error);
-      this.tasks = [];
-      alert('An error occurred when trying to read localStorage. The local storage is corrupted.');
+    ngOnInit(): void {
+        try {
+        const storedTasks = localStorage.getItem('tasks');
+        this.tasks = storedTasks ? JSON.parse(storedTasks) : [];
+        } catch (error) {
+        console.error('An error occurred when trying to read localStorage.', error);
+        this.tasks = [];
+        alert('An error occurred when trying to read localStorage. The local storage is corrupted.');
+        }
     }
-  }
 
   tasks: Task[] = [
     { id: 1, title: "Ir ao mercado", completed: false },
@@ -58,13 +59,23 @@ export class TaskListComponent implements OnInit {
   }
 
   get filteredTasks(): Task[] {
-    switch (this.filter) {
-      case TaskFilter.Pending:
-        return this.tasks.filter(task => !task.completed);
-      case TaskFilter.Completed:
-        return this.tasks.filter(task => task.completed);
-      default:
-        return this.tasks;
+    let result = this.tasks;
+
+    const normalize = (str: string) =>
+        str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+    const term = normalize(this.searchTerm);
+
+    if (this.filter === TaskFilter.Pending) {
+        result = result.filter(task => !task.completed);
+    } else if (this.filter === TaskFilter.Completed) {
+        result = result.filter(task => task.completed);
     }
+
+    if (this.searchTerm.trim()) {
+        result = result.filter(task => normalize(task.title.toLowerCase()).includes(term));
+    }
+
+    return result;
   }
 }
